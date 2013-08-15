@@ -15,6 +15,7 @@ import java.util.logging.Logger;
  */
 public class Copy {
      static DBService service = new DBService();
+
      private String copyId;
 
     public String getCopyId() {

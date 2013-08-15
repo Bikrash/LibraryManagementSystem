@@ -110,4 +110,8 @@ public class Member {
         Loan loan=new Loan(this, copy, fromDate, toDate);
         loan.add();
     }
+
+    public Copy findCopy(String copyId) {
+        return Copy.find(copyId);
+    }
 }
