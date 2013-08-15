@@ -16,11 +16,15 @@ import model.Member;
  */
 public class frmMember extends javax.swing.JFrame {
 
+    public void setMemberId(String memberId) {
+        txtMemberID.setText(memberId);
+    }
     /**
      * Creates new form frmMember
      */
     public frmMember() {
         initComponents();
+        
     }
 
     /**

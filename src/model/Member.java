@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -28,19 +27,31 @@ public class Member {
         return email;
     }
 
-    public Member(String fullName, String memberId, String email) {
-        this(fullName, memberId);
+    public Member(String memberId, String fullName, String email) {
+        this(memberId,fullName);
         this.email = email;
     }
 
-    public Member(String fullName, String memberId) {
+    public Member(String memberId, String fullName) {
         this.fullName = fullName;
         this.memberId = memberId;
-        service = new DBService();
+        
     }
 
     public static Member find(String memberId) {
-        return new Member("", "", "");
+        String query = "Select * from members where id='" + memberId + "'";
+        try {
+            ResultSet resultSet = service.doQuery(query);
+            if(resultSet.next()){
+                Member member = new Member(resultSet.getString("id"),resultSet.getString("fullName"),
+                        resultSet.getString("email"));
+                return member;
+            }
+            return null;
+        } catch (SQLException ex) {
+            Logger.getLogger(Member.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 
     public boolean exist() {
@@ -93,7 +104,7 @@ public class Member {
     private String fullName;
     private String memberId;
     private String email;
-    DBService service;
+    static DBService service = new DBService();
 
     private void payFine(double fine) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

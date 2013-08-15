@@ -4,12 +4,16 @@
  */
 package librarymanagementsystem;
 
+import javax.swing.JOptionPane;
+import model.Member;
+
 /**
  *
  * @author tchhay
  */
 public class frmLoan extends javax.swing.JFrame {
 
+    Member member;
     /**
      * Creates new form frmLoan
      */
@@ -51,6 +55,11 @@ public class frmLoan extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         txtMemberID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtMemberID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMemberIDActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText("Member ID : ");
@@ -79,12 +88,13 @@ public class frmLoan extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtMemberID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtMemberName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2)))
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtMemberID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)))
                 .addContainerGap())
         );
 
@@ -195,6 +205,41 @@ public class frmLoan extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void loadMember(){
+        if(this.member!=null){
+        txtMemberID.setText(this.member.getMemberId());
+        txtMemberName.setText(this.member.getFullName());
+        }
+    }
+    private void txtMemberIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMemberIDActionPerformed
+        // TODO add your handling code here:
+        if (!txtMemberID.getText().isEmpty()) {
+            Member member = Member.find(txtMemberID.getText());
+            if (member != null) {
+                this.member=member;
+                 loadMember();
+                
+            } else {
+                String memberId=txtMemberID.getText();
+                loadMember();
+                String[] choices = {"Yes", "No"};
+                int response = JOptionPane.showOptionDialog(this, "Member not found! create new?", 
+                        "Message!", JOptionPane.DEFAULT_OPTION, 
+                        JOptionPane.QUESTION_MESSAGE, null, choices, choices[0]);
+                if(response==0){
+                    frmMember fMember=new frmMember();
+                    fMember.setMemberId(memberId);
+                    fMember.setVisible(true);
+                }
+                else
+                {
+                    this.setVisible(false);
+                }
+            }
+           
+        }
+    }//GEN-LAST:event_txtMemberIDActionPerformed
 
     /**
      * @param args the command line arguments
