@@ -218,8 +218,7 @@ public class frmLoan extends javax.swing.JFrame {
             Member member = Member.find(txtMemberID.getText());
             if (member != null) {
                 this.member=member;
-                 loadMember();
-                
+                loadMember();
             } else {
                 String memberId=txtMemberID.getText();
                 loadMember();

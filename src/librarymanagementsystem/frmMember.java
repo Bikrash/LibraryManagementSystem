@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.Member;
+import model.Reservation;
 
 /**
  *
@@ -155,6 +156,8 @@ public class frmMember extends javax.swing.JFrame {
             }
         } catch (SQLException ex) {
             Logger.getLogger(frmMember.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            this.dispose();
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
