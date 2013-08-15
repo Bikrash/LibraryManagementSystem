@@ -5,6 +5,7 @@
 package librarymanagementsystem;
 
 import javax.swing.JOptionPane;
+import model.Copy;
 import model.Member;
 
 /**
@@ -104,6 +105,11 @@ public class frmLoan extends javax.swing.JFrame {
         jLabel3.setText("Copy ID :");
 
         txtCopyID.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtCopyID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCopyIDActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("From :");
@@ -239,6 +245,13 @@ public class frmLoan extends javax.swing.JFrame {
            
         }
     }//GEN-LAST:event_txtMemberIDActionPerformed
+
+    private void txtCopyIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCopyIDActionPerformed
+        // TODO add your handling code here:
+        if(!txtCopyID.getText().isEmpty()){
+            Copy copy = Copy.find(txtCopyID.getText());
+        }
+    }//GEN-LAST:event_txtCopyIDActionPerformed
 
     /**
      * @param args the command line arguments
