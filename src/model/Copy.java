@@ -15,14 +15,40 @@ import java.util.logging.Logger;
  */
 public class Copy {
      static DBService service = new DBService();
-    public static Copy find(String copyId){
-        String query = "Select * from copies where id='" + copyId + "'";
+     private String copyId;
+
+    public String getCopyId() {
+        return copyId;
+    }
+     private Publication publication;
+
+    public Publication getPublication() {
+        return publication;
+    }
+
+    public Copy(String copyId) {
+        this.copyId = copyId;
+    }
+    
+    public static boolean isExist(String copyId){
+        String query = "Select * from copies where is_lost=0 and id='" + copyId + "'";
         try {
             ResultSet resultSet = service.doQuery(query);
+            return resultSet.next();
+        } catch (SQLException ex) {
+            Logger.getLogger(Member.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    public static Copy find(String copyId){
+        String query = "Select * from copies where is_lost=0 and id='" + copyId + "'";
+        try {
+            ResultSet resultSet = service.doQuery(query);
+            
             if(resultSet.next()){
-                Member member = new Member(resultSet.getString("id"),resultSet.getString("fullName"),
-                        resultSet.getString("email"));
-                return member;
+                Copy copy= new Copy(resultSet.getString("id"));
+                copy.publication = Publication.find(resultSet.getString("publication_id"));
+                return copy;
             }
             return null;
         } catch (SQLException ex) {

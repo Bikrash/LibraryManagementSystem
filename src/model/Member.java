@@ -6,6 +6,7 @@ package model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -78,11 +79,6 @@ public class Member {
         return new Member[5];
     }
 
-    public void borrow(Copy copy) {
-        Loan loan = new Loan(this, copy);
-        loan.add();
-
-    }
 
     public void reserve(Publication publication) {
         // implement reserve publication
@@ -108,5 +104,10 @@ public class Member {
 
     private void payFine(double fine) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void borrow(Copy copy, Date fromDate, Date toDate) throws SQLException {
+        Loan loan=new Loan(this, copy, fromDate, toDate);
+        loan.add();
     }
 }
